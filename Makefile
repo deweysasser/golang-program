@@ -1,4 +1,4 @@
-
+.PHONY: test
 ifeq ($(shell go env GOOS),windows)
 EXE=.exe
 else
