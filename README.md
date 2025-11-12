@@ -6,3 +6,5 @@ A base for utility software written in golang
 
 This is a template project.  You (or I) can use it when starting a simple golang program so we can
 just immediately start coding interesting things instead of remembering the boiler-plate.
+
+See [[README-TEMPLATE.md]] for more information about how to use this template project.
