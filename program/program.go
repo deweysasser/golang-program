@@ -2,13 +2,14 @@ package program
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"runtime"
+
 	"github.com/alecthomas/kong"
 	"github.com/mattn/go-colorable"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"io"
-	"os"
-	"runtime"
 )
 
 // Options is the structure of program options
@@ -36,8 +37,9 @@ func (program *Options) Parse(args []string) (*kong.Context, error) {
 	return parser.Parse(args)
 }
 
-// Run runs the program
-func (program *Options) Run(options *Options) error {
+// Run runs the program.  Note that you can specify any argument types as long as they're bound.
+// Useful arguments might be context.Context, log.Logger, Options
+func (program *Options) Run() error {
 	return nil
 }
 
