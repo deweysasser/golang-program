@@ -3,7 +3,6 @@ module github.com/deweysasser/golang-program
 go 1.26.0
 
 require (
-	bou.ke/monkey v1.0.2
 	github.com/alecthomas/kong v1.14.0
 	github.com/mattn/go-colorable v0.1.14
 	github.com/rs/zerolog v1.34.0

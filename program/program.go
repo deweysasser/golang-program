@@ -12,6 +12,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var exitFunc = os.Exit
+
 // Options is the structure of program options
 type Options struct {
 	Version bool `help:"Show program version"`
@@ -52,7 +54,7 @@ func (program *Options) AfterApply() error {
 func (program *Options) initLogging() {
 	if program.Version {
 		fmt.Println(Version)
-		os.Exit(0)
+		exitFunc(0)
 	}
 
 	switch {

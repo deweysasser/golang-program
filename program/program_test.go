@@ -1,22 +1,21 @@
 package program
 
 import (
-	"bou.ke/monkey"
-	"github.com/stretchr/testify/assert"
-	"github.com/zenizh/go-capturer"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/zenizh/go-capturer"
 )
 
 func TestOptions_Run(t *testing.T) {
 	var program Options
 
 	exitValue := -1
-	fakeExit := func(x int) {
+	exitFunc = func(x int) {
 		exitValue = x
 	}
-	patch := monkey.Patch(os.Exit, fakeExit)
-	defer patch.Unpatch()
+	defer func() { exitFunc = os.Exit }()
 
 	out := capturer.CaptureStdout(func() {
 
