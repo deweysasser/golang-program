@@ -31,7 +31,15 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
     name: Build the docker image
+    env:
+      TAG: ${{ github.ref_name }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Sanitize tag
+        run: echo "TAG=${TAG//\//-}" >> $GITHUB_ENV
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -39,17 +47,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Build Image
-        run: make image IMAGE=ghcr.io/${{env.REPO}}:${{ github.ref_name }}
+        run: make image IMAGE=ghcr.io/${{env.REPO}}:${{env.TAG}}
 
       - name: Push
-        run: docker push ghcr.io/${{env.REPO}}:${{ github.ref_name }}
+        run: docker push ghcr.io/${{env.REPO}}:${{env.TAG}}
 
   format:
     runs-on: ubuntu-latest
