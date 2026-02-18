@@ -141,6 +141,39 @@ go test -v ./...                    # All tests with verbose output
 go test -v ./... -run TestName      # Single test
 ```
 
+## CI/CD and Releases
+
+This project includes three GitHub Actions workflows:
+
+### Build (`.github/workflows/build.yaml`)
+
+Runs on every push to any branch:
+- Runs `go vet`, tests, and builds the binary
+- Builds and pushes a Docker image to GHCR tagged with the branch name
+- Checks code formatting with `go fmt`
+
+### Test on All Platforms (`.github/workflows/test-multiplatform.yaml`)
+
+Runs on pull requests and manual dispatch:
+- Runs tests on Linux, macOS, and Windows
+
+### Release (`.github/workflows/release.yml`)
+
+Triggered by pushing a `v*` tag:
+- Builds cross-platform binaries (linux/darwin/windows x amd64/arm64) and packages them as zip files
+- Builds and pushes a Docker image to GHCR tagged with the version and `latest`
+- Generates a changelog and creates a GitHub Release with the zip artifacts
+
+### Creating a Release
+
+Tag a commit with a version and push the tag:
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The release workflow handles everything automatically — building binaries, creating the Docker image, and publishing the GitHub Release.
+
 ## Logging
 
 The program automatically detects terminal output and formats logs accordingly:
