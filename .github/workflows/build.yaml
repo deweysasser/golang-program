@@ -42,9 +42,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Build Image
         run: make image IMAGE=ghcr.io/${{env.REPO}}:${{ github.ref_name }}
 
