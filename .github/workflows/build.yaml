@@ -34,6 +34,9 @@ jobs:
     env:
       TAG: ${{ github.ref_name }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Sanitize tag
         run: echo "TAG=${TAG//\//-}" >> $GITHUB_ENV
 
@@ -43,9 +46,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Build Image
         run: make image IMAGE=ghcr.io/${{env.REPO}}:${{env.TAG}}
