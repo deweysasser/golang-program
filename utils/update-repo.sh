@@ -78,10 +78,20 @@ while IFS= read -r -d '' gofile; do
     fi
 done < <(find . -name '*.go' -print0)
 
+# Extract the project name (last path component of the module path).
+NEW_NAME="${NEW_MODULE##*/}"
+OLD_NAME="${OLD_MODULE##*/}"
+
+# Update .gitignore to ignore the new binary name instead of the old one.
+if [ -f .gitignore ]; then
+    if grep -q "^${OLD_NAME}$" .gitignore; then
+        sed -i "s|^${OLD_NAME}$|${NEW_NAME}|" .gitignore
+        echo "  updated .gitignore: ${OLD_NAME} -> ${NEW_NAME}"
+    fi
+fi
+
 # Update README.md heading if it still has the default name.
 if [ -f README.md ]; then
-    # Extract the project name (last path component of the module path).
-    NEW_NAME="${NEW_MODULE##*/}"
     if head -1 README.md | grep -q "^# golang-program$"; then
         sed -i "1s|^# golang-program$|# ${NEW_NAME}|" README.md
         echo "  updated README.md heading to '# ${NEW_NAME}'"
