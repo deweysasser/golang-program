@@ -30,25 +30,17 @@ you can clone this template and immediately start writing your actual program lo
    cd your-project-name
    ```
 
-2. **Update the module name** in `go.mod`
+2. **Update the module and import paths** to match your new repository
+   ```bash
+   make update-repo NEWREPO=github.com/yourusername/your-project-name
    ```
-   module github.com/yourusername/your-project-name
+   Or, if you've already set the git origin remote, it will auto-detect:
+   ```bash
+   make update-repo
    ```
+   This updates `go.mod`, `main.go`, `.chglog/config.yml`, and any other `.go` files that reference the template module path.
 
-3. **Update imports** in `main.go`
-   ```go
-   import (
-       "github.com/yourusername/your-project-name/program"
-       // ...
-   )
-   ```
-
-4. **Update repository URL** in Makefile (line 15)
-   ```make
-   REPO=$(shell go list | head -n 1)
-   ```
-
-5. **Build and run**
+3. **Build and run**
    ```bash
    make
    ./your-project-name --help

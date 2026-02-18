@@ -81,6 +81,9 @@ info::
 	@echo IMAGE=$(IMAGE)
 
 
+update-repo:
+	./utils/update-repo.sh $(NEWREPO)
+
 tools:
 	go install honnef.co/go/tools/cmd/staticcheck@latest
 	go install github.com/go-critic/go-critic/cmd/gocritic@latest
