@@ -14,7 +14,7 @@ LAST_RELEASE=
 
 REPO=$(shell go list | head -n 1)
 IMAGE=$(BASENAME)
-VERSION ?= $(shell git describe --tags --always --dirty)
+VERSION ?= $(shell ./utils/version.sh)
 GO_VERSION ?= $(shell grep '^go ' go.mod | awk '{print $$2}')
 DOCKER=docker
 PACKAGE=$(DIST)/$(basename $(notdir $(PROGRAM)))-$(shell go env GOOS)-$(shell go env GOARCH).zip
